@@ -1,0 +1,45 @@
+.macTop { 
+    border-top: #202124 solid 1px;
+    border-radius: 5px 5px 0 0;
+    font-size: 2.5rem;
+    height: 4rem;
+    background-color: #fff;
+    border-bottom: 1px solid #f4f2f2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: #202124 solid 5px;
+}
+.macTop-interface { 
+    display: flex;
+    width: 100vw;
+    background-color: #202124;
+}
+
+.macTop-interface > div { 
+    display: flex;
+    background-color: #e2bf2e;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 100%;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin: 0.5rem;
+}
+
+.macTop-interface > div:first-child {
+    background-color: #F85B52;
+}
+
+.macTop-interface > div:nth-child(2) {
+    background-color: #F8B552;
+}
+
+.macTop-interface > div:last-child {
+    background-color: #5EBE34;
+}
+
+
+
+
