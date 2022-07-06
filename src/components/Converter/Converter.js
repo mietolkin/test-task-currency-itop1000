@@ -1,57 +1,43 @@
 import "./converter.css";
-import React, { useEffect, useState} from 'react';
-// import { useEffect } from "react";
+import React, { useEffect, useState, useContext} from 'react';
+import { Context } from '../../context'
 import {Input, MemoizedInput} from '../Input/Input';
 
 export default function Converter(props) {
     const currency = [{id: 'USD', currency: '🇺🇸'}, {id: 'EUR', currency: '🇪🇺'}, {id: 'CNY', currency: '🇨🇳'}, {id: 'UAH', currency: '🇺🇦'}];
-  
+    const {result: currencyData} = useContext(Context)
+   
     const [number, setNumber] = useState('');
     const [result, setResult] = useState('');
     const [value, setValue] = useState('');
     const [value2, setValue2] = useState('');
     
     const [data, setData] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(false); 
     
-    let isVisible = value && value2 ? 'hey' : 'hidden';
-    console.log(isVisible)
+    let isVisible = value && value2 ? '' : 'hidden';
+    // console.log(isVisible)
     const handleNumber = (el) => { 
         if (value && value2) { 
             let num = Math.floor(el.target.value)
-            let calculating = Math.round((num * data.rates[value2])* 100) / 100
+            let calculating = Math.round((num * data[value2])* 100) / 100
             setNumber(num);
             setResult(calculating);
         }
     }
-
-    // const isVisible = () => { 
-    //     if (value && value2) { 
-    //         return ""
-    //     } else { 
-    //         return "hidden"
-    //     }
-
-    // }
     
     useEffect(()=> { 
         if(value) { 
-            fetch('https://api.exchangerate.host/latest?base='+value )
-              .then((response) => response.json())
-              .then((data) => {
-                console.log('fetched')
-                console.log(data)
-               setData(data);
-               setIsLoading(false);
-               setError(false)
-              })
-              .catch((error) => {
-                setData(false);
-                setIsLoading(false);
-                setError(error)
-              });
+          switch(value) { 
+            case ('USD'): setData(currencyData.USD.dataUsd.rates); break;
+            case ('EUR'): setData(currencyData.EUR.dataEur.rates); break;
+            case ('CNY'): setData(currencyData.CNY.dataCny.rates); break;
+            case ('UAH'): setData(currencyData.UAH.dataUah.rates); break;
+          }
         }
+      
+            setNumber("")
+            setResult('')
+        
     }, [value])
 
     return (

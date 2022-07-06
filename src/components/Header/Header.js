@@ -1,15 +1,14 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import "./header.css"
 import useFetch from '../../hooks.js/UseFetch'
+import { Context } from '../../context'
+
 
 export default function Header(props) {
+    const {result} = useContext(Context)
     
-    const {data: dataUsd, loading: loadingUsd, error: errorUsd} = useFetch('https://api.exchangerate.host/latest?base=EUR')
-    const {data: dataEur,  loading: loadingEur, error: errorEur} = useFetch('https://api.exchangerate.host/latest?base=USD')
-    const {data: dataCny, loading: loadingCny, error: errorCny} = useFetch('https://api.exchangerate.host/latest?base=CNY')
-    
-    // console.log(dataUsd, loadingUsd, errorUsd)
-    // console.log(data)
+    // console.log(result)
+
   return (
     <div className='header'>
         <span className='header-heading'> 
@@ -18,21 +17,21 @@ export default function Header(props) {
         <div className='header-currencies'>
             <div className=''>
                 <span>🇺🇸</span>
-                    {loadingUsd && 'loading'}
-                    {errorUsd && 'Error'}
-                    {dataUsd && `${Math.round(dataUsd.rates.UAH * 100) / 100} uah`}
+                    {result.USD.loadingUsd && 'loading'}
+                    {result.USD.errorUsd && 'Error'}
+                    {result.USD.dataUsd && `${Math.round(result.USD.dataUsd.rates.UAH * 100) / 100} uah`}
             </div>
             <div className=''>
                 <span>🇪🇺</span>
-                {loadingEur && 'loading'}
-                {errorEur && 'Error'}
-                {dataEur && `${Math.round(dataEur.rates.UAH * 100) / 100} uah`}
+                {result.EUR.loadingEur && 'loading'}
+                {result.EUR.errorEur && 'Error'}
+                {result.EUR.dataEur && `${Math.round(result.EUR.dataEur.rates.UAH * 100) / 100} uah`}
             </div>
             <div className=''>
                 <span>🇨🇳</span>
-                {loadingCny && 'loading'}
-                {errorCny && 'Error'}
-                {dataCny && `${Math.round(dataUsd.rates.UAH * 100) / 100} uah`}
+                {result.CNY.loadingCny && 'loading'}
+                {result.CNY.errorCny && 'Error'}
+                {result.CNY.dataCny && `${Math.round(result.CNY.dataCny.rates.UAH * 100) / 100} uah`}
             </div>
             {/* <div className='header-currencies__currency'></div>
             <div className='header-currencies__currency'></div> */}
